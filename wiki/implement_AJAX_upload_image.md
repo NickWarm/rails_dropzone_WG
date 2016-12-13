@@ -208,6 +208,7 @@ removedfile: function(file) {
 - [AJAX 學習筆記 (一) 如何使用 JSON 驗證使用者表單 | 小惡魔 - 電腦技術 - 工作筆記 - AppleBOY](https://blog.wu-boy.com/2008/09/jquery-ajax-學習筆記-一-如何使用-json-驗證使用者表單/)
 - [jQuery.ajax() | jQuery API 中文文档 -- jQuery 中文网](http://www.jquery123.com/jQuery.ajax/)
 - [jQuery.ajax() | jQuery API Documentation](http://api.jquery.com/jquery.ajax/)
+- [第三種方式：使用 JSON 資料格式 - Ruby on Rails 實戰聖經 | Ajax 應用程式](https://ihower.tw/rails/ajax.html#sec3)
 - 推薦閱讀這篇comment：[ruby on rails - Rendering JSON in controller - Stack Overflow](http://stackoverflow.com/a/14824660)
 
 controller要有與HTTP Verb的DELETE相對應的action：`destroy action`
