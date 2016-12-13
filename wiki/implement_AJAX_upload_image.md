@@ -1,6 +1,6 @@
-# 解構
+# 專案出處
 
-最後找到用paperclip實作我的目標的教學影片
+為了要實作AJAX上傳檔案，我研究了這個專案
 - [Part1：Ruby on Rails Ajax Files Upload with Dropzone - Upload, Drag and drop files - YouTube](https://www.youtube.com/watch?v=ic4MeDEfT08)
 - [Part2：Ruby on Rails Ajax Files Upload with Dropzone - List and delete file on server - YouTube](https://www.youtube.com/watch?v=PupYpBKOieA)
   - 除了paperclip外，也用了這個Gem：[dropzonejs-rails](https://github.com/ncuesta/dropzonejs-rails)
@@ -10,6 +10,8 @@
 - 該作者也把專案放到GitHub上面：[rails_dropzone example - GitHub](https://github.com/edomaru/rails_dropzone)
 
 >PS：跟朋友討論到，也可以用[jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)實作
+
+<br>
 
 # 上傳圖片的頁面
 
@@ -61,7 +63,7 @@ $(function () {
 - [Dropzone.js - Tips](http://www.dropzonejs.com/#tips)，搜尋「Dropzone.autoDiscover」
 
 
-# 檔案上傳成功：success Event
+## 檔案上傳成功：success Event
 
 ```
 $(function () {
@@ -90,7 +92,7 @@ $(function () {
 
 `success`、`init`、`removedfile`是Dropzone.js的Event listener
 - [Dropzone.js - success](http://www.dropzonejs.com/#event-success)
-- [Dropzone.js - removedfile - ](http://www.dropzonejs.com/#event-removedfile)
+- [Dropzone.js - removedfile](http://www.dropzonejs.com/#event-removedfile)
 - [Dropzone.js - init](http://www.dropzonejs.com/#config-init)
 
 把檔案拖曳到在網站上上傳區塊(`#my-dropzone`)後，就會執行`dropzone`
@@ -113,9 +115,11 @@ PS：上傳的view如下所示
 </div>
 ```
 
-檔案大小，這範例是設為2MB([Dropzone.js - Configuration - maxFilesize](http://www.dropzonejs.com/#config-maxFilesize))，並加入刪除連結([addRemoveLinks](http://www.dropzonejs.com/#config-addRemoveLinks))，由於我們要透過rails的controller寫入database，所以我們要先在uploads controller建`create action`與`strong parameter`
+這範例是設為上傳檔案最大2MB([maxFilesize](http://www.dropzonejs.com/#config-maxFilesize))，並加入刪除連結([addRemoveLinks](http://www.dropzonejs.com/#config-addRemoveLinks))。
 
-`uploads controller`
+由於我們要透過rails的controller寫入database，所以我們要先在uploads controller建`create action`與`strong parameter`
+
+[rails_dropzone/app/controllers/uploads_controller.rb](https://github.com/edomaru/rails_dropzone/blob/master/app/controllers/uploads_controller.rb)
 
 ```
 def create
@@ -135,7 +139,7 @@ private
   end
 ```
 
-於是我們才會在`dropzone`裡寫`paramName: 'upload[image]'`
+於是我們才會在`$("#my-dropzone").dropzone({..});`裡寫`paramName: 'upload[image]'`
 
 若檔案上傳成功(`success`)，就會看到預覽畫面([previewElement](http://www.dropzonejs.com/#config-previewTemplate))
 - 建議先閱讀：[Dropzone.js - Layout](http://www.dropzonejs.com/#layout)，搜尋「file.previewElement」
@@ -180,7 +184,7 @@ success: function(file, response) {
 ![](./img/upload_success.png)
 
 
-# 刪除檔案：removedfile Event
+## 刪除檔案：removedfile Event
 
 AJAX刪除檔案，同時砍掉database裡的檔案
 
@@ -230,7 +234,7 @@ end
 
 ![](./img/delete_data.png)
 
-# 初始狀態：init Event
+## 初始狀態：init Event
 
 網頁初始化時，我們需要查看已經存在的檔案
 
@@ -254,10 +258,10 @@ init: function() {
 }
 ```
 
-## 最初的困惑：路由
+### 如何撈url
 
 ```
-$.ger("<%= Rails.application.routes.url_helpers.list_uploads_path %>", function(data){
+$.get("<%= Rails.application.routes.url_helpers.list_uploads_path %>", function(data){
 
   });
 ```
@@ -308,7 +312,7 @@ end
 - [ruby on rails - Return url from paperclip to json - Stack Overflow](http://stackoverflow.com/questions/20440643/return-url-from-paperclip-to-json)
 - [ruby on rails - How can I get url for paperclip image in to_json - Stack Overflow](http://stackoverflow.com/questions/5588185/how-can-i-get-url-for-paperclip-image-in-to-json)
 
-## 取得database已存在的圖片
+### 取得database已存在的圖片
 
 開始之前推薦先閱讀這篇
 - [dropzone wiki - How to show files already stored on server](https://github.com/enyo/dropzone/wiki/FAQ#how-to-show-files-already-stored-on-server)
@@ -348,6 +352,8 @@ init: function() {
 - [dropzone/dist/dropzone.js](https://github.com/enyo/dropzone/blob/master/dist/dropzone.js)，第271行，搜尋「\_removeLink」
 - 因為先看到這篇才注意到的：[javascript - Download uploaded file with DropzoneJs - Stack Overflow](http://stackoverflow.com/a/21187634)
 
+<br>
+
 # 只想上傳一張圖片
 
 我的情境：只想上傳一張圖片，上傳第二張圖片時，砍掉前一張上傳的圖片
@@ -366,6 +372,8 @@ maxfilesexceeded: function(file) {
 ```
 
 >PS：原始dropzone預設你可一次上傳多個檔案
+
+
 
 # 顯示上傳後的圖片
 
