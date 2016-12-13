@@ -10,3 +10,16 @@
 		</div>
 	<% end %>
 </div>
+
+<br>
+<br>
+
+<tbody>
+  <% @upload %>  <!--上傳檔案的地方-->
+</tbody>
+
+
+<% @uploads.each do |upload| %>
+  <%= image_tag upload.image.url(:medium).to_s  %>
+<% end %>
+

@@ -3,15 +3,24 @@ $(function () {
 
 	$("#my-dropzone").dropzone({
 		maxFilesize: 2,
+
 		addRemoveLinks: true,
 		paramName: 'upload[image]',
+
 		success: function(file, response) {
 			$(file.previewElement).find('.dz-remove').attr('id', response.uploadId);
 			$(file.previewElement).addClass('dz-success');
 		},
+
+    maxFiles:1,  // 情境：上傳第二張圖片時，砍掉前一張上傳的圖片
+    maxfilesexceeded: function(file) {
+      this.removeAllFiles();
+      this.addFile(file);
+    },
+
 		removedfile: function(file) {
 			var id = $(file.previewTemplate).find('.dz-remove').attr('id');
-
+//      alert(id)
 			$.ajax({
 				type: 'DELETE',
 				url: "/uploads/" + id,
@@ -23,20 +32,23 @@ $(function () {
 			var previewElement;
 			return (previewElement = file.previewElement) != null ? (previewElement.parentNode.removeChild(file.previewElement)) : (void 0);
 		},
+
 		init: function() {
-			var me = this;
+      var me = this;
+      cilckable:false;
+      $.get("<%= Rails.application.routes.url_helpers.list_uploads_path %>", function(data) {
+        $.each(data.images, function(key, value) {
+          if (data.images != undefined && data.images.length > 0) {
+            me.emit("addedfile", value);
+            me.emit("thumbnail", value, value.src);
+            me.emit("complete", value);
 
-			$.get("<%= Rails.application.routes.url_helpers.list_uploads_path %>", function(data) {
-				$.each(data.images, function(key, value) {
-					if (data.images != undefined && data.images.length > 0) {
-						me.emit("addedfile", value);
-						me.emit("thumbnail", value, value.src);
-						me.emit("complete", value);
+            $(value._removeLink).attr("id", value.id);
 
-						$(value._removeLink).attr("id", value.id);
-					}
-				});
-			});
+          }
+        });
+      });
 		}
+
 	});
 });
