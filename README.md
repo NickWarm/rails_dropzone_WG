@@ -8,4 +8,6 @@
 
 # 筆記
 
-原始筆記紀錄於`wiki`底下的[implement_AJAX_upload_image.md](./wiki/implement_AJAX_upload_image.md)，GitHub [wiki](https://github.com/NickWarm/rails_dropzone_WG/wiki)也會貼一份一模一樣的內容，方便我自己以後辜狗搜尋到。
+原始筆記紀錄於`wiki`底下的[implement_AJAX_upload_image.md](./wiki/implement_AJAX_upload_image.md)
+
+[wiki](https://github.com/NickWarm/rails_dropzone_WG/wiki)也會貼一份一模一樣的內容，方便我自己以後辜狗搜尋到。
